@@ -83,6 +83,7 @@ Additional configuration options to dnsdock command:
 -help=false: Show this message
 -http=":80": Listen HTTP requests on this address
 -nameserver="8.8.8.8:53": DNS server for unmatched requests
+-observe="": If set, only watch containers with matching DNSDOCK_OBSERVE value
 -ttl=0: TTL for matched requests
 -verbose=true: Verbose output
 -tlsverify=false: enable mutual TLS between dnsdock and Docker
@@ -139,6 +140,9 @@ curl http://dnsdock.docker/services/serviceid -X PATCH --data-ascii '{"ttl": 0}'
 curl http://dnsdock.docker/set/ttl -X PUT --data-ascii '10'
 ```
 
+
+#### Limiting the containers dnsdock observes
+To limit which containers dnsdock watches, use the -observe=<value> setting. Then set the DNSDOCK_OBSERVE environment variable to the same value in the container.
 
 #### Overrides from ENV metadata
 
@@ -220,5 +224,3 @@ Add the following snippet under the `units` part:
 ---
 
 #### Lots of code in this repo is directly influenced by skydns and skydock. Many thanks to the authors of these projects.
-
-
