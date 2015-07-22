@@ -74,12 +74,27 @@ func (d *DockerManager) getService(id string) (*Service, error) {
 	service.Name = cleanContainerName(inspect.Name)
 	service.Ip = net.ParseIP(inspect.NetworkSettings.IPAddress)
 
-	service = overrideFromEnv(service, splitEnv(inspect.Config.Env))
-	if service == nil {
+	envMap := splitEnv(inspect.Config.Env)
+	service = overrideFromEnv(service, envMap)
+	if service == nil || skipObservation(d.config.observeVal, envMap) {
 		return nil, errors.New("Skipping " + id)
 	}
 
 	return service, nil
+}
+
+func skipObservation(configObserveVal string, envMap map[string]string) bool {
+	if len(configObserveVal) == 0 {
+		return false
+	}
+	observeVal, exists := envMap["DNSDOCK_OBSERVE"]
+	if !exists {
+		return true
+	}
+	if observeVal != configObserveVal {
+		return true
+	}
+	return false
 }
 
 func (d *DockerManager) eventCallback(event *dockerclient.Event, ec chan error, args ...interface{}) {
