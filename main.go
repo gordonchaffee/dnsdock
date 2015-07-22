@@ -29,6 +29,7 @@ func main() {
 	flag.StringVar(&config.tlsKey, "tlskey", config.tlsKey, "Path to client certificate private key")
 	flag.BoolVar(&config.verbose, "verbose", true, "Verbose output")
 	flag.IntVar(&config.ttl, "ttl", config.ttl, "TTL for matched requests")
+	flag.StringVar(&config.observeVal, "observe", config.observeVal, "Only match containers where DNSDOCK_OBSERVE == val")
 
 	var showVersion bool
 	if len(version) > 0 {
