@@ -1,5 +1,5 @@
 {
-	"ImportPath": "github.com/tonistiigi/dnsdock",
+	"ImportPath": "github.com/defend7/dnsdock",
 	"GoVersion": "go1.4.2",
 	"Deps": [
 		{

@@ -106,7 +106,7 @@ Instead of connecting to the Docker daemon's UNIX socket, you may prefer to conn
 You may build this into your own container with this example Dockerfile:
 
 ```
-FROM tonistiigi/dnsdock
+FROM defend7/dnsdock
 
 ENV DOCKER_TLS_VERIFY 1
 ENV DOCKER_CERTS /certs
@@ -215,7 +215,7 @@ Add the following snippet under the `units` part:
         [Service]
         EnvironmentFile=/etc/environment
         ExecStartPre=/bin/sh -c '/usr/bin/docker rm -f dnsdock || ls > /dev/null'
-        ExecStartPre=/bin/sh -c '/usr/bin/docker pull tonistiigi/dnsdock'
+        ExecStartPre=/bin/sh -c '/usr/bin/docker pull defend7/dnsdock'
         ExecStart=/usr/bin/docker run -v /var/run/docker.sock:/var/run/docker.sock --name dnsdock -p ${COREOS_PRIVATE_IPV4}:53:53/udp tonistiigi/dnsdock
         ExecStop=/bin/sh -c '/usr/bin/docker stop dnsdock  || ls > /dev/null'
 ```

@@ -1,7 +1,7 @@
 # /var/run/docker.sock does not seem to be available for fig
 # for this reason we violate LFHS and add the socket directly on /run
 dnsdock:
-    image: tonistiigi/dnsdock
+    image: defend7/dnsdock
     volumes:
         - /var/run/docker.sock:/run/docker.sock
     ports:

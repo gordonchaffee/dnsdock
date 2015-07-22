@@ -17,6 +17,6 @@ lint:
 	go fmt
 
 container:
-	docker build --tag tonistiigi/dnsdock .
+	docker build --tag defend7/dnsdock .
 
 .PHONY: deps test lint container
