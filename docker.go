@@ -66,12 +66,12 @@ func (d *DockerManager) getService(id string) (*Service, error) {
 	service := NewService()
 	service.Aliases = make([]string, 0)
 
-	service.Image = getImageName(inspect.Config.Image)
+	service.Image = strings.ToLower(getImageName(inspect.Config.Image))
 	if imageNameIsSHA(service.Image, inspect.Image) {
 		log.Println("Warning: Can't route ", id[:10], ", image", service.Image, "is not a tag.")
 		service.Image = ""
 	}
-	service.Name = cleanContainerName(inspect.Name)
+	service.Name = strings.ToLower(cleanContainerName(inspect.Name))
 	service.Ip = net.ParseIP(inspect.NetworkSettings.IPAddress)
 
 	envMap := splitEnv(inspect.Config.Env)
