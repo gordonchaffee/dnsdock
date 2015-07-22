@@ -1,10 +1,11 @@
-FROM golang:1.4.1
+# Derive from a container image that allows us to run multiple programs
+FROM phusion/baseimage:0.9.16
 
-ADD . /go/src/github.com/tonistiigi/dnsdock
+# Copy in the remaining rootfs (do this last, since it may include overrides)
+COPY dnsdock /usr/local/bin/
 
-RUN cd /go/src/github.com/tonistiigi/dnsdock && \
-    go get -v github.com/tools/godep && \
-    godep restore && \
-    go install -ldflags "-X main.version `git describe --tags HEAD``if [[ -n $(command git status --porcelain --untracked-files=no 2>/dev/null) ]]; then echo "-dirty"; fi`" ./...
+# Clean up
+RUN rm -rf /var/cache/apt/archives/*
 
-ENTRYPOINT ["/go/bin/dnsdock"] 
+# How to run this container
+ENTRYPOINT ["/usr/local/bin/dnsdock"]
