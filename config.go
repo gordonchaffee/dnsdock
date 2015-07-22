@@ -34,6 +34,9 @@ type Config struct {
 	verbose    bool
 	httpAddr   string
 	ttl        int
+
+	// Only observe containers that have DNSDOCK_OBSERVE set to this
+	observeVal string
 }
 
 func NewConfig() *Config {
@@ -46,6 +49,7 @@ func NewConfig() *Config {
 	if len(dockerCerts) == 0 {
 		dockerCerts = os.Getenv("HOME") + "/.docker"
 	}
+	observeVal := os.Getenv("DNSDOCK_OBSERVE")
 
 	return &Config{
 		nameserver: "8.8.8.8:53",
@@ -57,6 +61,7 @@ func NewConfig() *Config {
 		tlsCaCert:  dockerCerts + "/ca.pem",
 		tlsCert:    dockerCerts + "/cert.pem",
 		tlsKey:     dockerCerts + "/key.pem",
+		observeVal: observeVal,
 	}
 
 }
